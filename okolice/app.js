@@ -8,9 +8,12 @@ const expressLayouts = require('express-ejs-layouts')
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const bodyParser = require('body-parser')
 
-const indexRouter = require('./routes/index');
-const publicationsRouter = require('./routes/publications');
+const messagesRouter = require('./routes/messages');
+const postsRouter = require('./routes/posts');
+const authRouter = require('./routes/auth')
+const indexRouter = require('./routes/index')
 
 const app = express();
 
@@ -25,6 +28,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static('uploads'));
+app.use(bodyParser.urlencoded({limit: '10mb', extended: false}))
 
 const mongoose = require('mongoose')
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true})
@@ -34,7 +39,9 @@ db.once('open', () => console.log('Connected to Mongoose'))
 
 
 app.use('/', indexRouter);
-app.use('/publications', publicationsRouter);
+app.use('/auth', authRouter);
+app.use('/posts', postsRouter);
+app.use('/messages', messagesRouter);
 
 
 // catch 404 and forward to error handler

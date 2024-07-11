@@ -1,1 +1,38 @@
-publications
+<h2>Lista Ogłoszeń</h2>
+
+<form action="/posts" method="GET">
+  <div class="form-group">
+    <label for="search">Wyszukaj:</label>
+    <input type="text" id="search" name="search" placeholder="Szukaj wg tytułu lub opisu" value="<%= search || '' %>">
+  </div>
+  <div class="form-group">
+    <label for="category">Kategoria:</label>
+    <select id="category" name="category">
+      <option value="">-- Wybierz kategorię --</option>
+      <option value="Motoryzacja" <%= category === 'Motoryzacja' ? 'selected' : '' %>>Motoryzacja</option>
+      <option value="Nieruchomości" <%= category === 'Nieruchomości' ? 'selected' : '' %>>Nieruchomości</option>
+      <option value="Elektronika" <%= category === 'Elektronika' ? 'selected' : '' %>>Elektronika</option>
+      <option value="Moda" <%= category === 'Moda' ? 'selected' : '' %>>Moda</option>
+      <option value="Sport" <%= category === 'Sport' ? 'selected' : '' %>>Sport</option>
+      <option value="Hobby" <%= category === 'Hobby' ? 'selected' : '' %>>Hobby</option>
+      <option value="Usługi" <%= category === 'Usługi' ? 'selected' : '' %>>Usługi</option>
+      <option value="Praca" <%= category === 'Praca' ? 'selected' : '' %>>Praca</option>
+    </select>
+  </div>
+  <button type="submit">Szukaj</button>
+</form>
+
+<div class="post-list">
+  <% posts.forEach(post => { %>
+    <div class="post-item">
+      <h3><%= post.title %></h3>
+      <p>Kategoria: <%= post.category %></p>
+      <p>Autor: <%= post.author.username || "Anonymous" %></p>
+      <div class="post-images">
+        <% post.images.forEach(image => { %>
+          <img src="/<%= image %>" alt="Zdjęcie ogłoszenia">
+        <% }) %>
+      </div>
+    </div>
+  <% }) %>
+</div>

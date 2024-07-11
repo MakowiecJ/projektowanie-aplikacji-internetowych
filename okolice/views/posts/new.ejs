@@ -1,1 +1,29 @@
-new publication
+<h2>Dodaj Nowe Ogłoszenie</h2>
+<form action="/posts" method="POST" enctype="multipart/form-data">
+  <div class="form-group">
+    <label for="title">Tytuł:</label>
+    <input type="text" id="title" name="title" required>
+  </div>
+  <div class="form-group">
+    <label for="description">Opis:</label>
+    <textarea id="description" name="description" required></textarea>
+  </div>
+  <div class="form-group">
+    <label for="category">Kategoria:</label>
+    <select id="category" name="category" required>
+      <option value="Motoryzacja">Motoryzacja</option>
+      <option value="Nieruchomości">Nieruchomości</option>
+      <option value="Elektronika">Elektronika</option>
+      <option value="Moda">Moda</option>
+      <option value="Sport">Sport</option>
+      <option value="Hobby">Hobby</option>
+      <option value="Usługi">Usługi</option>
+      <option value="Praca">Praca</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="images">Zdjęcia:</label>
+    <input type="file" id="images" name="images" multiple>
+  </div>
+  <button type="submit">Dodaj Ogłoszenie</button>
+</form>
