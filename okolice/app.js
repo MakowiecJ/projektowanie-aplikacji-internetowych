@@ -10,7 +10,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const publicationsRouter = require('./routes/publications');
 
 const app = express();
 
@@ -32,8 +32,10 @@ const db = mongoose.connection
 db.on('error', error => console.error(error))
 db.once('open', () => console.log('Connected to Mongoose'))
 
+
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/publications', publicationsRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
