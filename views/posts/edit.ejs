@@ -1,0 +1,31 @@
+<h2>Edytuj Ogłoszenie</h2>
+<form action="/posts/<%= post.id %>/edit?_method=PUT" method="POST">
+  <div class="form-group">
+    <label for="title">Tytuł:</label>
+    <input type="text" id="title" name="title" value="<%= post.title %>" required>
+  </div>
+  <div class="form-group">
+    <label for="description">Opis:</label>
+    <textarea id="description" name="description" required><%= post.description %></textarea>
+  </div>
+  <div class="form-group">
+    <label for="category">Kategoria:</label>
+    <select id="category" name="category" required>
+      <option value="Motoryzacja" <%= post.category === 'Motoryzacja' ? 'selected' : '' %>>Motoryzacja</option>
+      <option value="Nieruchomości" <%= post.category === 'Nieruchomości' ? 'selected' : '' %>>Nieruchomości</option>
+      <option value="Elektronika" <%= post.category === 'Elektronika' ? 'selected' : '' %>>Elektronika</option>
+      <option value="Moda" <%= post.category === 'Moda' ? 'selected' : '' %>>Moda</option>
+      <option value="Sport" <%= post.category === 'Sport' ? 'selected' : '' %>>Sport</option>
+      <option value="Hobby" <%= post.category === 'Hobby' ? 'selected' : '' %>>Hobby</option>
+      <option value="Usługi" <%= post.category === 'Usługi' ? 'selected' : '' %>>Usługi</option>
+      <option value="Praca" <%= post.category === 'Praca' ? 'selected' : '' %>>Praca</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="images">Zdjęcia:</label>
+    <input type="file" id="images" name="images" class="filepond" multiple>
+  </div>
+  <button type="submit">Edytuj Ogłoszenie</button>
+  <a href="/posts/<%= post.id %>" class="cancel-btn">Anuluj</a>
+</form>
+

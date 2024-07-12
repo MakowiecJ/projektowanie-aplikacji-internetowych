@@ -1,0 +1,17 @@
+<div class="post-details">
+    <h1><%= post.title %></h1>
+    <p><strong>Kategoria:</strong> <%= post.category %></p>
+    <p><strong>Autor:</strong> <%= post.author.username || "Anonymous" %></p>
+    <p><strong>Opis:</strong> <%= post.description %></p>
+    <a href="/posts/<%= post.id %>/edit" class="edit-btn">Edytuj</a>
+    <%- include('../partials/deleteForm', { url: `/posts/${post.id}/delete` }) %>
+    <div class="post-images">
+        <% if (post.images && post.images.length > 0) { %>
+            <% post.images.forEach((image, index) => { %>
+                <img src="data:<%= image.extension %>;charset=utf-8;base64,<%= image.data.toString('base64') %>" alt="Zdjęcie ogłoszenia <%= index + 1 %>" class="<%= index === 0 ? 'active' : '' %>">
+            <% }) %>
+        <% } else { %>
+            <p>Brak zdjęć.</p>
+        <% } %>
+    </div>
+</div>

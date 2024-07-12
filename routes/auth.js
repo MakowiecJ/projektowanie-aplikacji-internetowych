@@ -25,4 +25,14 @@ router.post('/login', async (req, res) => {
     res.json({ token });
 });
 
+// Formularz rejestracji
+router.get('/register', (req, res) => {
+    res.render('auth/register');
+  });
+  
+  // Formularz logowania
+  router.get('/login', (req, res) => {
+    res.render('auth/login');
+  });
+
 module.exports = router;

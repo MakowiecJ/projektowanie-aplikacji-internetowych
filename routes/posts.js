@@ -1,44 +1,9 @@
 const express = require('express');
 const Post = require('../models/Post');
 const { authenticateToken } = require('../middleware/auth');
-const multer = require('multer');
-const upload = multer({dest: 'uploads/'})
-
-// Konfiguracja multer
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, 'uploads/');
-//   },
-//   filename: function (req, file, cb) {
-//     cb(null, `${Date.now()}_${file.originalname}`);
-//   }
-// });
-// const upload = multer({ storage });
+const imageMimeTypes = ['image/jpeg', 'image/png', 'images/gif'];
 
 const router = express.Router();
-
-
-// Dodanie ogłoszenia
-router.post('/', authenticateToken, upload.array('images', 10), async (req, res) => {
-  const images = req.files.map(file => file.path);
-  const post = new Post({
-    // author: req.user.userId,
-    author: '66902d1c503ac32debd5d369',
-    title: req.body.title,
-    description: req.body.description,
-    category: req.body.category,
-    images: images
-  })
-
-  try {
-    const newPost = await post.save();
-    // res.redirect(`/posts/${newPost.id}`);
-    res.redirect('/posts');
-  } catch (error){
-    console.log(error);
-    res.render('posts/new', { post: post, errorMessage: 'Error creating post' });
-  }
-});
 
 // Pobranie wszystkich ogłoszeń
 router.get('/', async (req, res) => {
@@ -65,23 +30,105 @@ router.get('/new', (req, res) => {
   res.render('posts/new', { post: new Post() })
 })
 
+router.get('/:id/edit', async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id)
+    res.render('posts/edit', { post: post })
+  } catch {
+    res.redirect('/posts')
+  }
+})
+
 // Pobranie konkretnego ogłoszenia
 router.get('/:id', async (req, res) => {
-  const post = await Post.findById(req.params.id).populate('author', 'username');
-  res.json(post);
+  try {
+    const post = await Post.findById(req.params.id).populate('author', 'username');
+    res.render('posts/post', { post});
+  } catch (error) {
+    res.redirect('/');
+  }
 });
 
+// Dodanie ogłoszenia
+router.post('/', authenticateToken, async (req, res) => {
+  const post = new Post({
+    // author: req.user.userId,
+    author: '66902d1c503ac32debd5d369',
+    title: req.body.title,
+    description: req.body.description,
+    category: req.body.category,
+  })
+
+  savePostImages(post, req.body.images);
+
+  try {
+    const newPost = await post.save();
+    // res.redirect(`/posts/${newPost.id}`);
+    res.redirect('/posts');
+  } catch (error){
+    console.log(error);
+    res.render('posts/new', { post: post, errorMessage: 'Error creating post' });
+  }
+});
+
+
 // Aktualizacja ogłoszenia
-router.put('/:id', authenticateToken, async (req, res) => {
-  const { title, description } = req.body;
-  const post = await Post.findByIdAndUpdate(req.params.id, { title, description }, { new: true });
-  res.json(post);
+router.put('/:id/edit', authenticateToken, async (req, res) => {
+  let post;
+  try {
+		post = await Post.findById(req.params.id);
+		post.title = req.body.title;
+		post.description = req.body.description;
+		post.category = req.body.category;
+		post.updatedAt = Date.now();
+		savePostImages(post, req.body.images);
+		post.save();
+		res.redirect(`/posts/${post.id}`);
+	} catch {
+		if (post == null) {
+			res.redirect('/');
+		} else {
+			res.render(`posts/:${req.params.id}/edit`, { post: post, errorMessage: 'Error editing post' });
+		}
+	}
 });
 
 // Usunięcie ogłoszenia
-router.delete('/:id', authenticateToken, async (req, res) => {
-  await Post.findByIdAndDelete(req.params.id);
-  res.status(204).send();
+router.delete('/:id/delete', authenticateToken, async (req, res) => {
+	let post;
+	try {
+		 post = await Post.findByIdAndDelete(req.params.id);
+		 res.redirect(`/`);
+	 } catch {
+		 if (post == null) {
+			 res.redirect('/');
+		 } else {
+			 res.render(`posts`, { errorMessage: 'Error editing post' });
+		 }
+	 }
 });
+
+
+function savePostImages(post, images) {
+  post.images = [];
+
+  if (images == null || images == '') return;
+
+  if (!Array.isArray(images)) {
+    images = [images];
+  }
+  
+  if (images.length > 0) {
+    images.forEach(image => {
+      const img = JSON.parse(image);
+      if (img != null && imageMimeTypes.includes(img.type)) {
+        post.images.push({
+          data: new Buffer.from(img.data, 'base64'),
+          extension: img.type
+        });
+      }
+    });
+  }
+}
 
 module.exports = router;

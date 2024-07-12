@@ -14,8 +14,13 @@ const messagesRouter = require('./routes/messages');
 const postsRouter = require('./routes/posts');
 const authRouter = require('./routes/auth')
 const indexRouter = require('./routes/index')
+const methodOverride = require('method-override')
 
 const app = express();
+
+app.use(bodyParser.json({limit: '10mb'}));
+app.use(bodyParser.urlencoded({limit: '10mb', extended: false}));
+app.use(methodOverride('_method'))
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,8 +33,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/uploads', express.static('uploads'));
-app.use(bodyParser.urlencoded({limit: '10mb', extended: false}))
 
 const mongoose = require('mongoose')
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true})
