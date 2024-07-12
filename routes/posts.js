@@ -64,7 +64,7 @@ router.post('/', authenticateToken, async (req, res) => {
   try {
     const newPost = await post.save();
     // res.redirect(`/posts/${newPost.id}`);
-    res.redirect('/posts');
+    res.redirect(`/posts/${newPost.id}`);
   } catch (error){
     console.log(error);
     res.render('posts/new', { post: post, errorMessage: 'Error creating post' });
@@ -82,7 +82,7 @@ router.put('/:id/edit', authenticateToken, async (req, res) => {
 		post.category = req.body.category;
 		post.updatedAt = Date.now();
 		savePostImages(post, req.body.images);
-		post.save();
+		await post.save();
 		res.redirect(`/posts/${post.id}`);
 	} catch {
 		if (post == null) {
@@ -103,32 +103,32 @@ router.delete('/:id/delete', authenticateToken, async (req, res) => {
 		 if (post == null) {
 			 res.redirect('/');
 		 } else {
-			 res.render(`posts`, { errorMessage: 'Error editing post' });
+			 res.render(`posts`, { errorMessage: 'Could not delete post' });
 		 }
 	 }
 });
 
 
 function savePostImages(post, images) {
-  post.images = [];
+	if (images == null || images == '') return;
+	
+	post.images = [];
 
-  if (images == null || images == '') return;
+	if (!Array.isArray(images)) {
+		images = [images];
+	}
 
-  if (!Array.isArray(images)) {
-    images = [images];
-  }
-  
-  if (images.length > 0) {
-    images.forEach(image => {
-      const img = JSON.parse(image);
-      if (img != null && imageMimeTypes.includes(img.type)) {
-        post.images.push({
-          data: new Buffer.from(img.data, 'base64'),
-          extension: img.type
-        });
-      }
-    });
-  }
+	if (images.length > 0) {
+		images.forEach(image => {
+		const img = JSON.parse(image);
+		if (img != null && imageMimeTypes.includes(img.type)) {
+			post.images.push({
+				data: new Buffer.from(img.data, 'base64'),
+				extension: img.type
+			});
+		}
+		});
+	}
 }
 
 module.exports = router;
