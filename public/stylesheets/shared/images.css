@@ -13,7 +13,20 @@
     position: relative; */
 }
 
-.image-large {
+/* .image-large {
     width: var(--image-width-large);
     height: calc(var(--image-width-large) * var(--image-aspect-ratio));
+} */
+
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 10px; /* Odstępy między obrazami */
+}
+
+.image-large {
+    width: 100%;
+    height: 300px; /* Możesz dostosować tę wartość do pożądanej wysokości */
+    object-fit: cover;
+    display: block;
 }

@@ -1,6 +1,8 @@
 # Okolice.pl - strona internetowa z ogłoszeniami
 
 ![strona glowna](public/images/strona-glowna.png)
+![strona ogloszenia](public/images/strona-ogloszenia.png)
+![nowe ogloszenie](public/images/nowe ogloszenie.png)
 
 
 ## Załozenia projektu

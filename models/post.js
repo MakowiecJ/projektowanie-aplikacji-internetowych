@@ -5,7 +5,7 @@ const postSchema = new mongoose.Schema({
     description: { type: String, required: true },
     category: {
         type: String,
-        enum: ['Motoryzacja', 'Nieruchomości', 'Elektronika', 'Moda', 'Sport', 'Hobby', 'Usługi', 'Praca'],
+        enum: ['Motoryzacja', 'Nieruchomości', 'Elektronika', 'Moda', 'Sport', 'Hobby', 'Usługi', 'Praca', 'Zwierzęta'],
         required: true
       },
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
