@@ -20,6 +20,12 @@
 * Github Actions + Azure Web App
 * [Okolice.pl](https://okolicepl.azurewebsites.net/)
 
+## Auth
+* Logowanie i autoryzacja przy uzyciu tokena jwt
+* Uzyte biblioteki:
+    * jsonwebtoken
+    * bcrypt
+
 ## Główne modele
 ![diagram klas](public/images/diagram-klas.png)
 

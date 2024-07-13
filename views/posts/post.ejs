@@ -4,9 +4,18 @@
     <p><strong>Autor:</strong> <%= post.author.username || "Anonymous" %></p>
     <p><strong>Opis:</strong> <%= post.description %></p>
     <div class="btn-row">
-        <a href="/posts/<%= post.id %>/edit" class="btn btn-primary">Edytuj</a>
-        <%- include('../partials/deleteForm', { url: `/posts/${post.id}/delete` }) %>
+        <div class="btn-row">
+            <% if (locals.userId === post.author.id) { %>
+                <a href="/posts/<%= post.id %>/edit" class="btn btn-primary">Edytuj</a>
+                <%- include('../partials/deleteForm', { url: `/posts/${post.id}/delete` }) %>
+            <% } else { %>
+                <a href="/messages" class="btn btn-primary">Napisz do autora</a>
+                <a href="/posts/user/<%= post.author.id %>" class="btn btn-primary">Zobacz wszystkie posty autora</a>
+            <% } %>
+        </div>
     </div>
+    <br>
+    <br>
     <div>
         <% if (post.images && post.images.length > 0) { %>
             <% post.images.forEach((image, index) => { %>

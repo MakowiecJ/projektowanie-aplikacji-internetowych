@@ -4,19 +4,20 @@ if (process.env.NODE_ENV !== 'production') {
 
 const jwt = require('jsonwebtoken');
 
-const authenticateToken = (req, res, next) => {
+const addUserToLocals = async (req, res, next) => {
     const token = req.cookies.token;
     if (token) {
         try {
             const decoded = jwt.verify(token, process.env.SECRET);
-            req.user = { userId: decoded.userId };
-            next();
+            res.locals.isLoggedIn = true;
+            res.locals.userId = decoded.userId;
         } catch (err) {
-            return res.status(403).send("Access denied.");
+            res.locals.isLoggedIn = false;
         }
     } else {
-        return res.status(401).send("No token provided.");
+        res.locals.isLoggedIn = false;
     }
+    next();
 };
 
-module.exports = { authenticateToken };
+module.exports = { addUserToLocals };

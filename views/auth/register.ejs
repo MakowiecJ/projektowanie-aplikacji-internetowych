@@ -1,20 +1,23 @@
-<h2>Rejestracja</h2>
+<h2 class="page-header">Rejestracja</h2>
 <form action="/auth/register" method="POST">
-  <div class="form-group">
-    <label for="username">Nazwa użytkownika:</label>
-    <input type="text" id="username" name="username" required>
-  </div>
-  <div class="form-group">
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required>
-  </div>
-  <div class="form-group">
-    <label for="password">Hasło:</label>
-    <input type="password" id="password" name="password" required>
-  </div>
-  <div class="form-group">
-    <label for="confirmPassword">Potwierdź hasło:</label>
-    <input type="password" id="confirmPassword" name="confirmPassword" required>
-  </div>
-  <button type="submit">Zarejestruj się</button>
+    <div class="form-row">
+        <div class="form-item">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-item">
+            <label for="username">Username:</label>
+            <input type="username" id="username" name="username" required>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-item">
+            <label for="password">Hasło:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+    </div>
+    <br>
+  <button class="btn btn-primary" type="submit">Zaloguj się</button>
 </form>

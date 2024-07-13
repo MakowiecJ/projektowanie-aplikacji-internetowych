@@ -11,7 +11,15 @@ router.post('/register', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({ username, email, password: hashedPassword });
     await newUser.save();
-    res.status(201).send('User registered');
+
+    // Create a token
+    const token = jwt.sign({ userId: newUser._id }, process.env.SECRET, { expiresIn: '1h' });
+
+    // Set token in a cookie
+    res.cookie('token', token, { httpOnly: true });
+
+    // Redirect to home page
+    res.redirect('/');
 });
 
 // Logowanie
@@ -21,18 +29,31 @@ router.post('/login', async (req, res) => {
     if (!user || !await bcrypt.compare(password, user.password)) {
         return res.status(401).send('Invalid credentials');
     }
-    const token = jwt.sign({ userId: user._id }, process.env.SECRET);
-    res.json({ token });
+
+    // Create a token
+    const token = jwt.sign({ userId: user._id }, process.env.SECRET, { expiresIn: '1h' });
+
+    // Set token in a cookie
+    res.cookie('token', token, { httpOnly: true });
+
+    // Redirect to home page
+    res.redirect('/');
 });
+
+router.get('/logout', (req, res) => {
+    res.clearCookie('token'); // Clear the token cookie
+    res.redirect('/'); // Redirect to home page or login page
+});
+
 
 // Formularz rejestracji
 router.get('/register', (req, res) => {
     res.render('auth/register');
   });
   
-  // Formularz logowania
-  router.get('/login', (req, res) => {
-    res.render('auth/login');
-  });
+// Formularz logowania
+router.get('/login', (req, res) => {
+res.render('auth/login');
+});
 
 module.exports = router;

@@ -1,30 +1,30 @@
 <div class="form-row">
     <div class="form-item">
       <label for="title">Tytuł:</label>
-      <input type="text" id="title" name="title" required>
+      <input type="text" id="title" name="title" value="<%= post.title %>" required>
     </div>
     <div class="form-item">
       <label for="category">Kategoria:</label>
         <select id="category" name="category" required>
-          <option value="Motoryzacja">Motoryzacja</option>
-          <option value="Nieruchomości">Nieruchomości</option>
-          <option value="Elektronika">Elektronika</option>
-          <option value="Moda">Moda</option>
-          <option value="Sport">Sport</option>
-          <option value="Hobby">Hobby</option>
-          <option value="Usługi">Usługi</option>
-          <option value="Praca">Praca</option>
+            <option value="Motoryzacja" <%= post.category === 'Motoryzacja' ? 'selected' : '' %>>Motoryzacja</option>
+            <option value="Nieruchomości" <%= post.category === 'Nieruchomości' ? 'selected' : '' %>>Nieruchomości</option>
+            <option value="Elektronika" <%= post.category === 'Elektronika' ? 'selected' : '' %>>Elektronika</option>
+            <option value="Moda" <%= post.category === 'Moda' ? 'selected' : '' %>>Moda</option>
+            <option value="Sport" <%= post.category === 'Sport' ? 'selected' : '' %>>Sport</option>
+            <option value="Hobby" <%= post.category === 'Hobby' ? 'selected' : '' %>>Hobby</option>
+            <option value="Usługi" <%= post.category === 'Usługi' ? 'selected' : '' %>>Usługi</option>
+            <option value="Praca" <%= post.category === 'Praca' ? 'selected' : '' %>>Praca</option>
         </select>
     </div>
-  </div>
+</div>
 
-  <div class="form-row">
+<div class="form-row">
     <div class="form-item">
-      <label for="images">Zdjęcia:</label>
-      <input type="file" id="images" name="images" class="filepond" multiple>
+        <label for="images">Zdjęcia:</label>
+        <input type="file" id="images" name="images" class="filepond" multiple>
     </div>
     <div class="form-item">
-      <label for="description">Opis:</label>
-      <textarea id="description" name="description" required></textarea>
+        <label for="description">Opis:</label>
+        <textarea id="description" name="description" required><%= post.description %></textarea>
     </div>
-  </div>
+</div>

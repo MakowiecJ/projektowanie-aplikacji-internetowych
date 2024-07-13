@@ -1,6 +1,6 @@
 <h2 class="page-header">Edytuj Ogłoszenie</h2>
 <form action="/posts/<%= post.id %>/edit?_method=PUT" method="POST">
-  <%- include('_form_fields') %>
+  <%- include('_form_fields', { post: post }) %>
   <div class="form-row form-row-end btn-row">
     <button class="btn btn-primary" type="submit">Edytuj Ogłoszenie</button>
     <a class="btn btn-danger" href="/posts/<%= post.id %>" class="cancel-btn">Anuluj</a>

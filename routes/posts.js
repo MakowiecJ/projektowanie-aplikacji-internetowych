@@ -1,6 +1,7 @@
 const express = require('express');
 const Post = require('../models/Post');
 const { authenticateToken } = require('../middleware/auth');
+const User = require('../models/User');
 const imageMimeTypes = ['image/jpeg', 'image/png', 'images/gif'];
 
 const router = express.Router();
@@ -25,6 +26,17 @@ router.get('/', async (req, res) => {
     res.redirect('/');
   }
 });
+
+// Pobranie ogloszen uzytkownika
+router.get('/user/:id', async (req, res) => {
+	try {
+	  const posts = await Post.find({author: req.params.id}).populate('author', 'username').sort({ createdAt: -1 });
+	  const postOwner = await User.findById(req.params.id);
+	  res.render('posts/myposts', { posts: posts, postOwner: postOwner});
+	} catch (error) {
+	  res.redirect('/');
+	}
+ });
 
 router.get('/new', (req, res) => {
   res.render('posts/new', { post: new Post() })
@@ -52,8 +64,7 @@ router.get('/:id', async (req, res) => {
 // Dodanie ogłoszenia
 router.post('/', authenticateToken, async (req, res) => {
   const post = new Post({
-    // author: req.user.userId,
-    author: '66902d1c503ac32debd5d369',
+    author: req.user.userId,
     title: req.body.title,
     description: req.body.description,
     category: req.body.category,

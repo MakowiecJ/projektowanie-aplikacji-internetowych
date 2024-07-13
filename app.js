@@ -7,12 +7,14 @@ const express = require('express');
 const expressLayouts = require('express-ejs-layouts')
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const loginChecker = require('./middleware/checkLogin')
 const logger = require('morgan');
 const bodyParser = require('body-parser')
 
 const messagesRouter = require('./routes/messages');
 const postsRouter = require('./routes/posts');
 const authRouter = require('./routes/auth')
+const messageRoutes = require('./routes/messages');
 const methodOverride = require('method-override')
 
 const app = express();
@@ -31,6 +33,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(loginChecker.addUserToLocals)
 app.use(express.static(path.join(__dirname, 'public')));
 
 const mongoose = require('mongoose')
@@ -61,5 +64,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 
 module.exports = app;
