@@ -113,3 +113,8 @@ body {
   white-space: pre-wrap;
   word-wrap: break-word;
 }
+
+.filepond--item {
+  width: calc(50% - 0.5em);
+}
+

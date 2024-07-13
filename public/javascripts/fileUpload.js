@@ -22,7 +22,8 @@ function loadPond() {
     FilePond.setOptions({
         stylePanelAspectRatio: ratio,
         imageResizeTargetWidth: width,
-        imageResizeTargetHeight: height
+        imageResizeTargetHeight: height,
+        maxFiles: 4,
     })
     
     FilePond.parse(document.body);
