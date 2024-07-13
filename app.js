@@ -13,7 +13,6 @@ const bodyParser = require('body-parser')
 const messagesRouter = require('./routes/messages');
 const postsRouter = require('./routes/posts');
 const authRouter = require('./routes/auth')
-const indexRouter = require('./routes/index')
 const methodOverride = require('method-override')
 
 const app = express();
@@ -41,10 +40,10 @@ db.on('error', error => console.error(error))
 db.once('open', () => console.log('Connected to Mongoose'))
 
 
-app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/posts', postsRouter);
 app.use('/messages', messagesRouter);
+app.use('/', postsRouter);
 
 
 // catch 404 and forward to error handler

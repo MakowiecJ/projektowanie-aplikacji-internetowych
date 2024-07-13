@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
   }
 
   try {
-    const posts = await Post.find(searchOptions).populate('author', 'username');
+    const posts = await Post.find(searchOptions).populate('author', 'username').sort({ createdAt: -1 });
     res.render('posts/index', { posts, search, category});
   } catch (error) {
     res.redirect('/');

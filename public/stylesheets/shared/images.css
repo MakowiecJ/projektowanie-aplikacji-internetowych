@@ -1,0 +1,19 @@
+:root {
+    --image-width: 200px;
+    --image-width-large: 400px;
+    --image-aspect-ratio:0.8;
+}
+
+.image {
+    width: var(--image-width);
+    height: calc(var(--image-width) * var(--image-aspect-ratio));
+    /* background-color: var(--color-background-light);
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative; */
+}
+
+.image-large {
+    width: var(--image-width-large);
+    height: calc(var(--image-width-large) * var(--image-aspect-ratio));
+}

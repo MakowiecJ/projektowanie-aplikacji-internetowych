@@ -2,6 +2,9 @@
 @import 'shared/fonts.css';
 @import 'shared/header.css';
 @import 'shared/buttons.css';
+@import 'shared/form.css';
+@import 'shared/postlist.css';
+@import 'shared/images.css';
 
 :root {
   font-family: 'Gotham Rounded';
@@ -60,6 +63,10 @@ body {
 }
 
 .slides img.active {
+  flex-shrink: 0;
+  width: 150px;
+  height: 150px;
+  position: relative;
   display: block;
   opacity: 1;
 }
@@ -86,4 +93,8 @@ body {
 
 .prev:hover, .next:hover {
   background-color: rgba(0, 0, 0, 0.8);
+}
+
+.error-message {
+  color: hsl(var(--color-danger-hue), 100%, 50%);
 }
