@@ -1,6 +1,6 @@
 # Okolice.pl - strona internetowa z ogłoszeniami
 
-[strona glowna](public/images/strona-glowna.png)
+![strona glowna](public/images/strona-glowna.png)
 
 
 ## Załozenia projektu
@@ -21,10 +21,10 @@
 * [Okolice.pl](https://okolicepl.azurewebsites.net/)
 
 ## Główne modele
-[diagram klas](public/images/diagram-klas.png)
+![diagram klas](public/images/diagram-klas.png)
 
 ## Typowa interakcja uzytkownika z systemem
-[diagram interakcji](public/images/diagram-typowej-interakcji.png)
+![diagram interakcji](public/images/diagram-typowej-interakcji.png)
 
 ## Szybki start
 
