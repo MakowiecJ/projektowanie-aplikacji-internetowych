@@ -19,6 +19,10 @@ const methodOverride = require('method-override')
 
 const app = express();
 
+const favicon = require('serve-favicon');
+
+app.use(favicon(__dirname + '/public/images/favicon.ico'));
+
 app.use(bodyParser.json({limit: '10mb'}));
 app.use(bodyParser.urlencoded({limit: '10mb', extended: false}));
 app.use(methodOverride('_method'))
