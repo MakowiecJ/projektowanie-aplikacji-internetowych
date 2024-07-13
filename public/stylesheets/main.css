@@ -98,3 +98,18 @@ body {
 .error-message {
   color: hsl(var(--color-danger-hue), 100%, 50%);
 }
+
+.description-box {
+  padding: 10px;
+  border-radius: 5px;
+  padding: 20px;
+  background-color: var(--form-input-background-color);
+  border: 1px solid var(--form-input-border-color-light);
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.description-content {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}

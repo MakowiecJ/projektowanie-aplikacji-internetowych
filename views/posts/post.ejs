@@ -2,7 +2,10 @@
     <h1><%= post.title %></h1>
     <p><strong>Kategoria:</strong> <%= post.category %></p>
     <p><strong>Autor:</strong> <%= post.author.username || "Anonymous" %></p>
-    <p><strong>Opis:</strong> <%= post.description %></p>
+    <p><strong>Opis:</strong></p>
+    <div class="description-box">
+        <div class="description-content"><%= post.description %></div>
+    </div>
     <div class="btn-row">
         <div class="btn-row">
             <% if (locals.userId === post.author.id) { %>
