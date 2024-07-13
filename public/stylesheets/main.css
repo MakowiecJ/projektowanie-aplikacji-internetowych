@@ -104,7 +104,7 @@ body {
   border-radius: 5px;
   padding: 20px;
   background-color: var(--form-input-background-color);
-  border: 1px solid var(--form-input-border-color-light);
+  border: 1px solid var(--form-input-border-color);
   border-radius: 5px;
   margin-bottom: 20px;
 }
